@@ -24,6 +24,11 @@ fileInput.addEventListener("change", (e) => {
 const containers = document.querySelectorAll(".container");
 
 containers.forEach((container) => {
+    document.addEventListener("dragstart", (e) => {
+        if (e.target.classList.contains("draggable-item")) {
+            e.dataTransfer.setData("text", e.target.id);
+        }
+    });
     container.addEventListener("dragover", (e) => {
         e.preventDefault();
     });
@@ -32,15 +37,10 @@ containers.forEach((container) => {
         e.preventDefault();
         const data = e.dataTransfer.getData("text");
         const dragElement = document.getElementById(data);
-        if (dragElement && dragElement.classList.contains("draggable-item")) {
+        
             container.appendChild(dragElement);
-        }
+        
     });
 });
 
-document.addEventListener("dragstart", (e) => {
-    if (e.target.classList.contains("draggable-item")) {
-        e.dataTransfer.setData("text", e.target.id);
-    }
-});
 
